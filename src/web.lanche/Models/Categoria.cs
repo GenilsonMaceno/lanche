@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace web.lanche.Views.Home
+namespace web.lanche.Models
 {
     [Table("Categorias")]
     public class Categoria

@@ -1,6 +1,6 @@
 using web.lanche.Context;
+using web.lanche.Models;
 using web.lanche.Repositories.Interfaces;
-using web.lanche.Views.Home;
 
 namespace web.lanche.Repositories
 {

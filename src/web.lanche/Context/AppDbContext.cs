@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using web.lanche.Views.Home;
+using web.lanche.Models;
 
 namespace web.lanche.Context
 {
