@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using web.lanche.Context;
+using web.lanche.Models;
 using web.lanche.Repositories;
 using web.lanche.Repositories.Interfaces;
 
@@ -16,6 +17,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddTransient<ILancheRepository, LancheRepository>();
 builder.Services.AddTransient<ICategoriaRepository, CategoriaRepository>();
 builder.Services.AddSingleton<IHttpContextAccessor,HttpContextAccessor>();
+builder.Services.AddScoped(serviceProvider => CarrinhoCompra.GetCarrinho(serviceProvider));
 
 builder.Services.AddControllersWithViews();
 
