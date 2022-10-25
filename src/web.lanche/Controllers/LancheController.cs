@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using web.lanche.Models;
 using web.lanche.Repositories.Interfaces;
 using web.lanche.ViewModels;
 
@@ -13,14 +14,35 @@ namespace web.lanche.Controllers
             _lancheRepository = lancheRepository;
         }
 
-        public IActionResult List()
+        public IActionResult List(string categoria)
         {
-            // var lanches = _lancheRepository.Lanches;
+            IEnumerable<Lanche> lanches;
+            string categoriaAtual = string.Empty;
 
-            var viewModel = new LancheViewModel();
+            if (string.IsNullOrEmpty(categoria))
+            {
+                lanches = _lancheRepository.Lanches.OrderBy(l => l.LancheId);
+                categoriaAtual = "Todos os lanches";
 
-            viewModel.Lanches = _lancheRepository.Lanches;
-            viewModel.CategoriaAtual = "Categoria Atual";
+            }else
+            {
+                if (string.Equals("Normal", categoria , StringComparison.OrdinalIgnoreCase))
+                {
+                    lanches = _lancheRepository.Lanches
+                        .Where(l => l.Categoria.Nome.Equals("Normal"))
+                        .OrderBy(l => l.Nome);
+                }else{
+
+                    lanches = _lancheRepository.Lanches
+                        .Where(l => l.Categoria.Nome.Equals("Natural"))
+                        .OrderBy(l => l.Nome);
+                }
+            }
+
+            var viewModel = new LancheViewModel(){
+                Lanches = lanches,
+                CategoriaAtual = categoria
+            };
 
             return View(viewModel);
         }
