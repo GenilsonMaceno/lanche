@@ -26,25 +26,35 @@ namespace web.lanche.Controllers
 
             }else
             {
-                if (string.Equals("Normal", categoria , StringComparison.OrdinalIgnoreCase))
-                {
-                    lanches = _lancheRepository.Lanches
-                        .Where(l => l.Categoria.Nome.Equals("Normal"))
-                        .OrderBy(l => l.Nome);
-                }else{
+                // if (string.Equals("Normal", categoria , StringComparison.OrdinalIgnoreCase))
+                // {
+                //     lanches = _lancheRepository.Lanches
+                //         .Where(l => l.Categoria.Nome.Equals("Normal"))
+                //         .OrderBy(l => l.Nome);
+                // }else{
 
-                    lanches = _lancheRepository.Lanches
-                        .Where(l => l.Categoria.Nome.Equals("Natural"))
-                        .OrderBy(l => l.Nome);
-                }
+                //     lanches = _lancheRepository.Lanches
+                //         .Where(l => l.Categoria.Nome.Equals("Natural"))
+                //         .OrderBy(l => l.Nome);
+                // }
+
+                lanches = _lancheRepository.Lanches.Where(l => l.Categoria.Nome.Equals(categoria))
+                .OrderBy(c => c.Nome);
+
+                categoriaAtual = categoria;
             }
 
             var viewModel = new LancheViewModel(){
                 Lanches = lanches,
-                CategoriaAtual = categoria
+                CategoriaAtual = categoriaAtual
             };
 
             return View(viewModel);
+        }
+
+        public IActionResult Details(int lancheId){
+            var lanche = _lancheRepository.Lanches.FirstOrDefault(l => l.LancheId == lancheId);
+            return View(lanche);
         }
     }
 }
