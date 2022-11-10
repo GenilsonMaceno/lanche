@@ -26,8 +26,8 @@ namespace web.lanche.Controllers
 
         public IActionResult Index()
         {
-            var itens = _carrinhoCompra.GetCarrinhoCompraItems();
-            _carrinhoCompra.carrinhoCompraItems = itens;
+            var itens = _carrinhoCompra.GetCarrinhoCompraItens();
+            _carrinhoCompra.CarrinhoCompraItens = itens;
 
             var carrinhoCompraVM = new CarrinhoCompraViewModel{
                 CarrinhoCompra = _carrinhoCompra,

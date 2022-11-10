@@ -14,7 +14,7 @@ namespace web.lanche.Models
 
         public string CarrinhoCompraId { get; set; }
 
-        public List<CarrinhoCompraItem> carrinhoCompraItems { get; set; }
+        public List<CarrinhoCompraItem> CarrinhoCompraItens { get; set; }
 
         public static CarrinhoCompra GetCarrinho(IServiceProvider services){
 
@@ -43,7 +43,7 @@ namespace web.lanche.Models
         #region [ ADICIONAR CARRINHO ]
         public void AdicionarCarrinho(Lanche lanche){
 
-            var carrinhoCompraItem = _context.CarrinhoCompraItems
+            var carrinhoCompraItem = _context.CarrinhoCompraItens
                                              .SingleOrDefault(s => s.Lanche.LancheId == lanche.LancheId &&
                                                               s.CarrinhoCompraId == CarrinhoCompraId);
 
@@ -56,7 +56,7 @@ namespace web.lanche.Models
                     Quantidade = 1
                 };
 
-                _context.CarrinhoCompraItems.Add(carrinhoCompraItem);
+                _context.CarrinhoCompraItens.Add(carrinhoCompraItem);
              }else{
                 carrinhoCompraItem.Quantidade++;
              }
@@ -71,7 +71,7 @@ namespace web.lanche.Models
         public void RemoverCarrinho(Lanche lanche){
 
 
-            var carrinhoCompraItem = _context.CarrinhoCompraItems
+            var carrinhoCompraItem = _context.CarrinhoCompraItens
                                              .SingleOrDefault
                                              (
                                                 s => s.Lanche.LancheId == lanche.LancheId 
@@ -86,7 +86,7 @@ namespace web.lanche.Models
                 {
                     carrinhoCompraItem.Quantidade--;
                 }else{
-                    _context.CarrinhoCompraItems.Remove(carrinhoCompraItem);
+                    _context.CarrinhoCompraItens.Remove(carrinhoCompraItem);
                 }
 
                 _context.SaveChanges();
@@ -96,11 +96,11 @@ namespace web.lanche.Models
         #endregion [ REMOVER CARRINHO ]
 
         #region [ OBTER CARRINHO DE COMPRA ITEM ]
-        public List<CarrinhoCompraItem> GetCarrinhoCompraItems(){
+        public List<CarrinhoCompraItem> GetCarrinhoCompraItens(){
             
-            return carrinhoCompraItems ?? 
-                   (carrinhoCompraItems = 
-                        _context.CarrinhoCompraItems
+            return CarrinhoCompraItens ?? 
+                   (CarrinhoCompraItens = 
+                        _context.CarrinhoCompraItens
                         .Where(c => c.CarrinhoCompraId == CarrinhoCompraId)
                         .Include(s => s.Lanche)
                         .ToList());
@@ -110,10 +110,10 @@ namespace web.lanche.Models
 
         #region [LIMPAR CARRINHO ]
         public void LimparCarrinho(){
-            var carrinhoItens = _context.CarrinhoCompraItems
+            var carrinhoItens = _context.CarrinhoCompraItens
                                 .Where(carrinho => carrinho.CarrinhoCompraId == CarrinhoCompraId);
 
-            _context.CarrinhoCompraItems.RemoveRange(carrinhoItens);
+            _context.CarrinhoCompraItens.RemoveRange(carrinhoItens);
             _context.SaveChanges();
         }
 
@@ -122,7 +122,7 @@ namespace web.lanche.Models
         #region [OBTER TOTAL DE COMPRA]
         public decimal GetCarrinhoCompraTotal(){
 
-            var total = _context.CarrinhoCompraItems
+            var total = _context.CarrinhoCompraItens
                         .Where(c => c.CarrinhoCompraId == CarrinhoCompraId)
                         .Select(c => c.Lanche.Preco * c.Quantidade).Sum();
 

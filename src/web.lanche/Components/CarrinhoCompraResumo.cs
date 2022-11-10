@@ -15,14 +15,14 @@ namespace web.lanche.Components
 
         public IViewComponentResult Invoke(){
             
-            var itens = _carrinhoCompra.GetCarrinhoCompraItems();
+            var itens = _carrinhoCompra.GetCarrinhoCompraItens();
 
             // var itens = new List<CarrinhoCompraItem>(){
             //     new CarrinhoCompraItem(),
             //     new CarrinhoCompraItem()
             // };
 
-            _carrinhoCompra.carrinhoCompraItems = itens;
+            _carrinhoCompra.CarrinhoCompraItens = itens;
 
             var carrinhoCompraVM = new CarrinhoCompraViewModel{
                 CarrinhoCompra = _carrinhoCompra,
