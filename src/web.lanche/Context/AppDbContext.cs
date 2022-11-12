@@ -1,9 +1,13 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using web.lanche.Models;
 
 namespace web.lanche.Context
 {
-    public class AppDbContext : DbContext
+    // O IdentityDbContext fornece todas as propriedade DbSet necessárias
+    // para gerenciar as tabelas de identidade no SQLServer
+    public class AppDbContext : IdentityDbContext<IdentityUser> 
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using web.lanche.Context;
 using web.lanche.Models;
@@ -11,6 +12,14 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<AppDbContext>(options => 
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+//IdentityUser => A classe IdentityUser é fornecida pela ASP.NET Core e contém propriedade para UserName, PasswordHash, Email etc. 
+// Essa é a classe usada pelo Identity para gerenciar usuários registrados do seu aplicativo.
+
+//IdentityRole => É uma classe interna do Identity e fornece informações sobre perfil do usuário.
+builder.Services.AddIdentity<IdentityUser,IdentityRole>()
+                .AddEntityFrameworkStores<AppDbContext>()
+                .AddDefaultTokenProviders();
 
 
 //pesquisa sobre tipo de escopo
@@ -43,6 +52,7 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseSession();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseEndpoints(endpoints => {
